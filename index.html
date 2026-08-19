@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>皮拉提斯日誌</title>
+<meta name="description" content="記錄每一次練習，看見身體的進步">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#8B5A6B">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="皮拉提斯日誌">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ONBOARDING -->
+  <div id="onboard" class="onboard" style="display:none;">
+    <img src="icons/ring.svg" class="onboard-ring" alt="">
+    <h1>皮拉提斯日誌</h1>
+    <p>記錄每一堂課的器材與感受，追蹤課程進度，讓每一次練習都留下痕跡。</p>
+    <button id="onboardStart">開始使用</button>
+  </div>
+
+  <!-- MAIN SHELL -->
+  <div id="shell" style="display:none;">
+
+    <!-- ============ HOME VIEW ============ -->
+    <div class="view active" id="view-home">
+      <div class="topbar">
+        <div>
+          <div class="eyebrow">PILATES PRACTICE</div>
+          <h1 class="page-title">皮拉提斯日誌</h1>
+        </div>
+      </div>
+
+      <div style="padding:0 22px;">
+        <div class="stat-row" id="homeStats"></div>
+
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">MONTHLY SCHEDULE</div>
+            <h2>每月課程安排</h2>
+          </div>
+        </div>
+
+        <div class="calendar-card">
+          <div class="cal-nav">
+            <button id="calPrev" aria-label="上個月">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="month-label" id="calMonthLabel">2026年8月</div>
+            <button id="calNext" aria-label="下個月">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          </div>
+          <div class="cal-legend">
+            <div class="legend-item"><span class="legend-dot upcoming"></span>待上課</div>
+            <div class="legend-item"><span class="legend-dot pending"></span>待補打卡</div>
+            <div class="legend-item"><span class="legend-dot done"></span>已完成</div>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ JOURNAL VIEW ============ -->
+    <div class="view" id="view-journal">
+      <div class="topbar">
+        <div>
+          <div class="eyebrow">PRACTICE NOTES</div>
+          <h1 class="page-title">練習日誌</h1>
+        </div>
+      </div>
+      <div style="padding:0 22px;">
+        <p class="page-sub" id="journalCount">還沒有任何紀錄</p>
+        <div id="journalList"></div>
+      </div>
+    </div>
+
+    <!-- ============ COURSES VIEW ============ -->
+    <div class="view" id="view-courses">
+      <div class="topbar">
+        <div>
+          <div class="eyebrow">MY COURSES</div>
+          <h1 class="page-title">我的課程</h1>
+        </div>
+      </div>
+      <div style="padding:0 22px;">
+        <p class="page-sub">管理不同教室與老師的課程。</p>
+
+        <div class="summary-band">
+          <div class="summary-col">
+            <div class="summary-label">所有課程金額</div>
+            <div class="summary-value">NT$ <span id="sumTotalAmount">0</span></div>
+          </div>
+          <div class="summary-col">
+            <div class="summary-label">進行中堂數</div>
+            <div class="summary-value"><span id="sumRemainingLessons">0</span><span class="unit"> 堂</span></div>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab-btn active" data-coursetab="active">進行中</button>
+          <button class="tab-btn" data-coursetab="done">已完成</button>
+        </div>
+
+        <div id="courseList"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FAB -->
+  <button class="fab" id="fabBtn" aria-label="新增" style="display:none;">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav" id="bottomNav" style="display:none;">
+    <button class="nav-item active" data-view="home">
+      <span class="nav-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V10"/></svg></span>
+      主頁
+    </button>
+    <button class="nav-item" data-view="journal">
+      <span class="nav-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/><path d="M9 13h6M9 17h6M9 9h2"/></svg></span>
+      日誌
+    </button>
+    <button class="nav-item" data-view="courses">
+      <span class="nav-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.5 3h11a1 1 0 011 1v16l-6.5-3.5L5.5 20V4a1 1 0 011-1z"/></svg></span>
+      課程
+    </button>
+  </nav>
+
+</div>
+
+<!-- ============ SHEET: Add / Edit Course ============ -->
+<div class="sheet-backdrop" id="sheetCourseBackdrop">
+  <div class="sheet">
+    <button class="sheet-close" data-close="sheetCourseBackdrop">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="eyebrow">MY COURSES</div>
+    <h2 class="sheet-title" id="courseSheetTitle">新增課程</h2>
+    <form id="courseForm">
+      <div class="field">
+        <label>教室 / 課程名稱</label>
+        <input type="text" id="cName" placeholder="例如：一對一私教課" required>
+      </div>
+      <div class="field">
+        <label>老師名稱</label>
+        <input type="text" id="cTeacher" placeholder="例如：Amy 老師">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>總堂數</label>
+          <input type="number" id="cTotalLessons" min="1" placeholder="10" required>
+        </div>
+        <div class="field">
+          <label>課程金額 (NT$)</label>
+          <input type="number" id="cAmount" min="0" placeholder="18000" required>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>開始日期</label>
+          <input type="date" id="cStartDate">
+        </div>
+        <div class="field">
+          <label>結束日期</label>
+          <input type="date" id="cEndDate">
+        </div>
+      </div>
+      <div class="field">
+        <label>教室名稱</label>
+        <input type="text" id="cStudioName" placeholder="例如：XX Pilates Studio">
+      </div>
+      <div class="field">
+        <label>教室地點 / 捷運站</label>
+        <input type="text" id="cLocation" placeholder="例如：台北市大安區・捷運大安站">
+      </div>
+      <button type="submit" class="sheet-submit">儲存課程</button>
+      <div class="sheet-delete-link" id="courseDeleteLink" style="display:none;">刪除這個課程</div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ SHEET: Add / Edit Session (calendar entry) ============ -->
+<div class="sheet-backdrop" id="sheetSessionBackdrop">
+  <div class="sheet">
+    <button class="sheet-close" data-close="sheetSessionBackdrop">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="eyebrow">MONTHLY SCHEDULE</div>
+    <h2 class="sheet-title" id="sessionSheetTitle">安排課程</h2>
+    <form id="sessionForm">
+      <div class="field">
+        <label>選擇課程</label>
+        <select id="sCourseId" required></select>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>日期</label>
+          <input type="date" id="sDate" required>
+        </div>
+        <div class="field">
+          <label>時間</label>
+          <input type="time" id="sTime">
+        </div>
+      </div>
+      <div class="field">
+        <label>狀態</label>
+        <div class="status-picker" id="sStatusPicker">
+          <div class="status-opt upcoming" data-status="upcoming">待上課</div>
+          <div class="status-opt pending" data-status="pending">待補打卡</div>
+          <div class="status-opt done" data-status="done">已完成</div>
+        </div>
+      </div>
+      <button type="submit" class="sheet-submit">儲存安排</button>
+      <div class="sheet-delete-link" id="sessionDeleteLink" style="display:none;">刪除這個安排</div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ SHEET: Day detail (list of sessions on a day) ============ -->
+<div class="sheet-backdrop" id="sheetDayBackdrop">
+  <div class="sheet">
+    <button class="sheet-close" data-close="sheetDayBackdrop">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="eyebrow" id="dayEyebrow">SCHEDULE</div>
+    <h2 class="sheet-title" id="dayTitle">8月16日</h2>
+    <div id="dayList"></div>
+    <button class="sheet-submit" id="dayAddBtn" style="margin-top:6px;">＋ 新增這天的安排</button>
+  </div>
+</div>
+
+<!-- ============ SHEET: Add / Edit Journal Entry ============ -->
+<div class="sheet-backdrop" id="sheetEntryBackdrop">
+  <div class="sheet">
+    <button class="sheet-close" data-close="sheetEntryBackdrop">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="eyebrow">PRACTICE NOTE</div>
+    <h2 class="sheet-title" id="entrySheetTitle">上課紀錄</h2>
+    <form id="entryForm">
+      <div class="field">
+        <label>標題</label>
+        <input type="text" id="eTitle" placeholder="例如：上課 - D1" required>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>關聯課程</label>
+          <select id="eCourseId"><option value="">不指定</option></select>
+        </div>
+        <div class="field">
+          <label>日期</label>
+          <input type="date" id="eDate" required>
+        </div>
+      </div>
+      <div class="field">
+        <label>使用的器材</label>
+        <div class="gear-picker" id="gearPicker"></div>
+      </div>
+      <div class="field">
+        <label>今天的感受 / 筆記</label>
+        <textarea id="eNote" placeholder="今天練到腳超抖ㅋㅋㅋ"></textarea>
+      </div>
+      <button type="submit" class="sheet-submit">儲存日誌</button>
+      <div class="sheet-delete-link" id="entryDeleteLink" style="display:none;">刪除這篇日誌</div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
