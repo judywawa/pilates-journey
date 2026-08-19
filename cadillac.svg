@@ -1,0 +1,32 @@
+<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="#6B4A52" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- vertical posts -->
+    <line x1="34" y1="40" x2="34" y2="128"/>
+    <line x1="166" y1="40" x2="166" y2="128"/>
+    <!-- top frame -->
+    <path d="M34 40 L38 22 L162 22 L166 40 Z" fill="#EFD9DE"/>
+    <line x1="38" y1="22" x2="38" y2="40"/>
+    <line x1="162" y1="22" x2="162" y2="40"/>
+    <!-- top rail -->
+    <line x1="42" y1="26" x2="158" y2="26"/>
+    <!-- bed -->
+    <rect x="30" y="100" width="140" height="22" rx="5" fill="#C98A9B" stroke="#8B5A6B"/>
+    <!-- legs -->
+    <line x1="40" y1="122" x2="38" y2="140"/>
+    <line x1="160" y1="122" x2="162" y2="140"/>
+    <!-- push through bar -->
+    <path d="M120 40 Q120 66 96 66 Q72 66 72 40" />
+    <!-- trapeze -->
+    <line x1="60" y1="26" x2="60" y2="46"/>
+    <line x1="140" y1="26" x2="140" y2="46"/>
+    <path d="M52 46 Q60 60 68 46" fill="#F0C6CE" stroke="#8B5A6B"/>
+    <path d="M132 46 Q140 60 148 46" fill="#F0C6CE" stroke="#8B5A6B"/>
+    <!-- hanging straps -->
+    <line x1="90" y1="26" x2="90" y2="52"/>
+    <line x1="110" y1="26" x2="110" y2="52"/>
+    <circle cx="90" cy="56" r="5"/>
+    <circle cx="110" cy="56" r="5"/>
+    <!-- springs to bed -->
+    <path d="M96 66 q3 -3 6 0 q3 3 6 0" stroke="#B98A56"/>
+  </g>
+</svg>

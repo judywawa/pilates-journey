@@ -1,0 +1,18 @@
+<svg viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="#6B4A52" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- seat -->
+    <rect x="24" y="46" width="90" height="34" rx="8" fill="#C98A9B" stroke="#8B5A6B"/>
+    <!-- handle post -->
+    <line x1="46" y1="46" x2="46" y2="18"/>
+    <path d="M32 18 L60 18" />
+    <!-- legs -->
+    <line x1="30" y1="80" x2="26" y2="128"/>
+    <line x1="108" y1="80" x2="112" y2="128"/>
+    <line x1="34" y1="100" x2="106" y2="100" stroke-width="1.6"/>
+    <!-- pedal -->
+    <path d="M114 88 Q134 92 134 108 Q134 122 116 122" fill="#EFD9DE"/>
+    <!-- springs -->
+    <path d="M116 96 q4 -4 8 0 q4 4 8 0" stroke="#B98A56"/>
+    <path d="M116 108 q4 -4 8 0 q4 4 8 0" stroke="#B98A56"/>
+  </g>
+</svg>
