@@ -1,49 +1,19 @@
-const CACHE_NAME = 'pilates-journal-v1';
-const ASSETS = [
-  './',
-  './index.html',
-  './styles.css',
-  './app.js',
-  './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/reformer.svg',
-  './icons/cadillac.svg',
-  './icons/chair.svg',
-  './icons/ring.svg',
-  './icons/ball.svg',
-  './icons/mat.svg',
-  './icons/band.svg'
-];
-
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)).catch(() => {})
-  );
+// 這是一個「清除用」的 service worker
+// 目的：清空所有舊快取、解除自身註冊，讓瀏覽器回到完全沒有 SW 攔截的狀態
+self.addEventListener('install', () => {
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    )
-  );
-  self.clients.claim();
-});
-
-self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-          return response;
-        })
-        .catch(() => cached);
+    caches.keys().then((keys) => {
+      return Promise.all(keys.map((k) => caches.delete(k)));
+    }).then(() => {
+      return self.registration.unregister();
+    }).then(() => {
+      return self.clients.matchAll();
+    }).then((clients) => {
+      clients.forEach((client) => client.navigate(client.url));
     })
   );
 });
